@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💖</title>
+    <style>
+        /* Import a playful cursive font */
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ff9ec4 0%, #ffc0d3 50%, #ffe0e9 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating hearts animation */
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.6);
+            animation: float 15s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main card container */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 30px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+            animation: cardAppear 0.8s ease-out;
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Question text */
+        .question {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #ff69b4;
+            margin-bottom: 30px;
+            line-height: 1.4;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.2);
+        }
+
+        /* Name highlight */
+        .name {
+            color: #ff1493;
+            font-weight: 600;
+            font-size: 1.1em;
+            display: block;
+            margin-top: 10px;
+        }
+
+        /* Signature */
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #ff69b4;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        /* Button container */
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        /* Button styles */
+        button {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        /* YES button */
+        .yes-btn {
+            background: linear-gradient(135deg, #ff6b9d, #ff8fab);
+            color: white;
+            transform: scale(1);
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .yes-btn:active {
+            transform: scale(1.05);
+        }
+
+        /* NO button */
+        .no-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ff8787);
+            color: white;
+            transition: all 0.1s ease;
+        }
+
+        .no-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Success message */
+        .success-message {
+            display: none;
+            animation: successAppear 0.8s ease-out;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        @keyframes successAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .success-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #ff69b4;
+            margin-bottom: 20px;
+        }
+
+        .success-emojis {
+            font-size: 3rem;
+            margin-top: 20px;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Hide original content when success shows */
+        .card.hide-content .question,
+        .card.hide-content .signature,
+        .card.hide-content .buttons {
+            display: none;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 600px) {
+            .question {
+                font-size: 2rem;
+            }
+
+            .card {
+                padding: 30px 20px;
+            }
+
+            button {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+
+            .success-text {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts background -->
+    <div class="hearts-container"></div>
+
+    <!-- Main card -->
+    <div class="card" id="card">
+        <div class="question">
+            <span class="name">Sheila Mea Labadia</span>,<br>
+            will you be my Valentine?
+        </div>
+
+        <div class="signature">
+            — Yanrey Romaine 💖
+        </div>
+
+        <div class="buttons">
+            <button class="yes-btn" id="yesBtn">YES 💕</button>
+            <button class="no-btn" id="noBtn">NO 😭</button>
+        </div>
+
+        <!-- Success message (hidden initially) -->
+        <div class="success-message" id="successMessage">
+            <div class="success-text">
+                Yay! You just made me the happiest person 💖
+            </div>
+            <div class="success-emojis">
+                🐱💖🐈😸💕😻🐾
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts in the background
+        function createHearts() {
+            const heartsContainer = document.querySelector('.hearts-container');
+            const heartSymbols = ['💖', '💕', '💗', '💓', '💝', '💘'];
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 15 + 's';
+                heart.style.fontSize = (15 + Math.random() * 15) + 'px';
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        // Runaway button functionality
+        function moveButtonRandomly(button) {
+            const card = document.getElementById('card');
+            const cardRect = card.getBoundingClientRect();
+            const buttonRect = button.getBoundingClientRect();
+            
+            // Get available space (considering card boundaries)
+            const maxX = window.innerWidth - buttonRect.width - 20;
+            const maxY = window.innerHeight - buttonRect.height - 20;
+            const minX = 20;
+            const minY = 20;
+            
+            // Generate random position
+            const randomX = Math.random() * (maxX - minX) + minX;
+            const randomY = Math.random() * (maxY - minY) + minY;
+            
+            // Smooth transition
+            button.style.transition = 'all 0.3s ease';
+            button.style.position = 'fixed';
+            button.style.left = randomX + 'px';
+            button.style.top = randomY + 'px';
+            button.style.zIndex = '1000';
+            
+            // Reset transition after movement
+            setTimeout(() => {
+                button.style.transition = 'all 0.1s ease';
+            }, 300);
+        }
+
+        // YES button click handler
+        function handleYesClick() {
+            const card = document.getElementById('card');
+            const successMessage = document.getElementById('successMessage');
+            const noBtn = document.getElementById('noBtn');
+            
+            // Hide the NO button
+            noBtn.style.display = 'none';
+            
+            // Hide original content
+            card.classList.add('hide-content');
+            
+            // Show success message
+            successMessage.classList.add('show');
+            
+            // Add celebration effect
+            celebrate();
+        }
+
+        // Celebration effect (confetti-like hearts and cats)
+        function celebrate() {
+            const heartSymbols = ['💖', '💕', '💗', '💓', '💝', '💘', '💐', '🥰', '🐱', '🐈', '😸', '😻', '🐾'];
+            
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                    heart.style.position = 'fixed';
+                    heart.style.left = Math.random() * window.innerWidth + 'px';
+                    heart.style.top = Math.random() * window.innerHeight + 'px';
+                    heart.style.fontSize = (20 + Math.random() * 20) + 'px';
+                    heart.style.pointerEvents = 'none';
+                    heart.style.zIndex = '9999';
+                    heart.style.animation = 'celebrateHeart 2s ease-out forwards';
+                    
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 2000);
+                }, i * 50);
+            }
+        }
+
+        // Add celebrate animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes celebrateHeart {
+                0% {
+                    transform: translateY(0) scale(0) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(-200px) scale(1.5) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create floating hearts
+            createHearts();
+            
+            // Get buttons
+            const yesBtn = document.getElementById('yesBtn');
+            const noBtn = document.getElementById('noBtn');
+            
+            // YES button click
+            yesBtn.addEventListener('click', handleYesClick);
+            
+            // NO button hover - move away
+            noBtn.addEventListener('mouseenter', function() {
+                moveButtonRandomly(noBtn);
+            });
+            
+            // NO button click - move away
+            noBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                moveButtonRandomly(noBtn);
+            });
+            
+            // Also move on touch (for mobile)
+            noBtn.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                moveButtonRandomly(noBtn);
+            });
+        });
+    </script>
+</body>
+</html>
